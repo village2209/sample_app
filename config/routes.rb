@@ -1,13 +1,19 @@
 SampleApp::Application.routes.draw do
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
+
+  resources :sessions, only: [:new, :create, :destroy]
+  resources :microposts, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy]
+
+  get "users/new"
+
   get "microposts/create"
 
   get "microposts/destroy"
-
-  resources :users
-  resources :sessions, only: [:new, :create, :destroy]
-  resources :microposts, only: [:create, :destroy]
-
-  get "users/new"
 
   root to: 'static_pages#home'
 
